@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You Are an Idiot!</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.1s; /* Smooth transition for background color */
+        }
+        #content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <h1>you are an idiot</h1>
+    </div>
+    <script>
+        // Function to toggle the background color between black and white
+        function toggleBackgroundColor() {
+            const currentColor = document.body.style.backgroundColor;
+            if (currentColor === 'rgb(0, 0, 0)' || currentColor === '') {
+                document.body.style.backgroundColor = '#fff';
+                document.body.style.color = '#000'; // Change text color for better visibility
+            } else {
+                document.body.style.backgroundColor = '#000';
+                document.body.style.color = '#fff'; // Change text color back to white
+            }
+        }
+
+        // Toggle the background color every 0.1 seconds (100 milliseconds)
+        setInterval(toggleBackgroundColor, 100);
+
+        // Function to open a popup with the same content
+        function openPopup() {
+            const popup = window.open("", "popup", "width=300,height=200");
+            popup.document.write(`
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>You Are an Idiot!</title>
+                    <style>
+                        body {
+                            background-color: #000;
+                            color: #fff;
+                            text-align: center;
+                            justify-content: center;
+                            align-items: center;
+                            display: flex;
+                            height: 100vh;
+                            margin: 0;
+                            font-family: Arial, sans-serif;
+                            transition: background-color 0.1s;
+                        }
+                        #content {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div id="content">
+                        <h1>you are an idiot</h1>
+                    </div>
+                    <script>
+                        function toggleBackgroundColor() {
+                            const currentColor = document.body.style.backgroundColor;
+                            if (currentColor === 'rgb(0, 0, 0)' || currentColor === '') {
+                                document.body.style.backgroundColor = '#fff';
+                                document.body.style.color = '#000';
+                            } else {
+                                document.body.style.backgroundColor = '#000';
+                                document.body.style.color = '#fff';
+                            }
+                        }
+                        setInterval(toggleBackgroundColor, 100);
+
+                        function glitchContent() {
+                            const content = document.getElementById('content');
+                            const maxX = window.innerWidth - content.clientWidth;
+                            const maxY = window.innerHeight - content.clientHeight;
+                            const randomX = Math.floor(Math.random() * maxX);
+                            const randomY = Math.floor(Math.random() * maxY);
+                            content.style.left = randomX + 'px';
+                            content.style.top = randomY + 'px';
+                        }
+                        setInterval(glitchContent, 100);
+                    <\/script>
+                </body>
+                </html>
+            `);
+        }
+
+        // Event listener for key presses
+        document.addEventListener('keypress', openPopup);
+
+        // Function to make the page fullscreen
+        function makeFullscreen() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                document.documentElement.msRequestFullscreen();
+            }
+        }
+
+        // Detect when the user tries to exit fullscreen and re-enter fullscreen
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                makeFullscreen();
+            }
+        });
+
+        document.addEventListener('mozfullscreenchange', () => {
+            if (!document.mozFullScreenElement) {
+                makeFullscreen();
+            }
+        });
+
+        document.addEventListener('webkitfullscreenchange', () => {
+            if (!document.webkitFullscreenElement) {
+                makeFullscreen();
+            }
+        });
+
+        document.addEventListener('msfullscreenchange', () => {
+            if (!document.msFullscreenElement) {
+                makeFullscreen();
+            }
+        });
+
+        // Make the page fullscreen on load
+        window.onload = makeFullscreen;
+
+        // Function to make the content glitch around the screen
+        function glitchContent() {
+            const content = document.getElementById('content');
+            const maxX = window.innerWidth - content.clientWidth;
+            const maxY = window.innerHeight - content.clientHeight;
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            content.style.left = randomX + 'px';
+            content.style.top = randomY + 'px';
+        }
+
+        // Glitch the content every 0.1 seconds (100 milliseconds)
+        setInterval(glitchContent, 100);
+    </script>
+</body>
+</html>
