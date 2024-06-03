@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinCode Pro | Home</title>
+    <link rel="icon" href="lincode.jpg" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #E0E0E0;
+            margin: 0;
+            padding: 0;
+            height: 160vh;
+        }
+        .container {
+            background: #1E1E1E;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            max-width: 500px;
+            padding: 20px;
+            text-align: center;
+            opacity: 0; /* Initially hidden */
+            transform: translateY(-20px); /* Initially positioned above */
+            transition: opacity 1s ease, transform 1s ease; /* Smooth transition */
+            margin: 60vh auto 0; /* Margin added to top */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        h1 {
+            color: #e4e4e4;
+        }
+        h1:hover{
+            cursor:default;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #E0E0E0;
+        }
+        input, select, button {
+            width: 92%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #333;
+            background: #333;
+            color: #E0E0E0;
+        }
+        button {
+            background-color: #BB86FC;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all ease 0.3s;
+        }
+        button:hover {
+            background-color: #BB86FC;
+        }
+        #results {
+            margin-top: 20px;
+            text-align: left;
+            color: #E0E0E0;
+        }
+        .download-btn {
+            display: none;
+            margin-top: 10px;
+            background-color: #03DAC6;
+        }
+        .download-btn:hover {
+            background-color: #02B3A4;
+        }
+        .loading {
+            color: #888;
+            font-style: italic;
+        }
+        /* Dropdown styling */
+        select {
+            width: 97%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #333;
+            background: #333;
+            color: #E0E0E0;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23E0E0E0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+
+        /* Remove default arrow for IE */
+        select::-ms-expand {
+            display: none;
+        }
+
+        .fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #termsOfService {
+            margin: 4vh 0; /* Margin added */
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-weight: 500;
+            font-size: large;
+            width: 60%;
+        }
+
+        #termsOfServiceLabel{
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-weight: 600;
+            font-size: xx-large;
+            width: 60%;
+            margin-top: 10vh;
+        }
+
+        .buttonthing {
+            color: #E0E0E0;
+            width: 16%;
+            background-color: #1616167c;
+            border: none;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .buttonthing.active{
+            background-color: #BB86FC;
+        }
+
+        #topBar{
+            width: 100%;
+            height: 8vh;
+            background-color: #00000010;
+            z-index: 1000; /* Ensure it appears above other content */
+            position: fixed;
+            top: 0;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        #topBar button {
+            margin: 0 0.7vh; /* Add spacing between buttons */
+            
+        }
+        
+
+        #sideBar{
+            width: 40%;
+            height: 100vh;
+            background-color: #ff0000bb;
+            z-index: 1000; /* Ensure it appears above other content */
+            position: fixed;
+            top: 0;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        #sideBar button {
+            margin: 0 0.7vh; /* Add spacing between buttons */
+            
+        }
+
+
+        
+
+        .quicknav{width: 15%;
+            background-color: #1d1d1d8c;
+        }
+
+        .quicknav:hover{
+            background-color: #BB86FC;
+        }
+
+
+        /* Chatbox styling */
+        #chatbox {
+            margin-top: 20vh;
+            width: 90%;
+            max-width: 55vh;
+            background: #1E1E1E;
+            border-radius: 1vh;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        #chatbox #chatlogs {
+            height: fit-content;
+            overflow-y: auto;
+            border: 1px solid #333;
+            border-radius: 1.2vh;
+            padding: 10px;
+            margin-bottom: 5vh;
+            background: #222;
+            color: #E0E0E0;
+        }
+        .updatelogFont{
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-weight: 700;
+            transition: all ease 0.3s;
+        }
+        .updatelogFont:hover{
+            cursor:default;
+        }
+        .bottomshit {
+    width: 100%;
+    height: 16vh;
+    margin-top: 20vh;
+    background-color: #0000004d;
+}
+
+
+.bigFontSize{
+    margin-top: 15vh;
+                font-size: 10vh;
+            color: rgb(204, 162, 255);
+            text-shadow: 0 0 5px rgba(187, 134, 252, 0.5),
+                         0 0 10px rgba(187, 134, 252, 0.5),
+                         0 0 15px rgba(187, 134, 252, 0.5),
+                         0 0 20px rgba(187, 134, 252, 0.5),
+                         0 0 25px rgba(187, 134, 252, 0.5),
+                         0 0 30px rgba(187, 134, 252, 0.5),
+                         0 0 35px rgba(187, 134, 252, 0.5);
+            animation: shine 2s infinite;
+}
+
+
+
+@keyframes shine {
+            0% {
+                text-shadow: 0 0 5px rgba(187, 134, 252, 0.5),
+                             0 0 10px rgba(187, 134, 252, 0.5),
+                             0 0 15px rgba(187, 134, 252, 0.5),
+                             0 0 20px rgba(187, 134, 252, 0.5),
+                             0 0 25px rgba(187, 134, 252, 0.5),
+                             0 0 30px rgba(187, 134, 252, 0.5),
+                             0 0 35px rgba(187, 134, 252, 0.5);
+            }
+            50% {
+                text-shadow: 0 0 10px rgba(187, 134, 252, 0.7),
+                             0 0 20px rgba(187, 134, 252, 0.7),
+                             0 0 30px rgba(187, 134, 252, 0.7),
+                             0 0 40px rgba(187, 134, 252, 0.7),
+                             0 0 50px rgba(187, 134, 252, 0.7),
+                             0 0 60px rgba(187, 134, 252, 0.7),
+                             0 0 70px rgba(187, 134, 252, 0.7);
+            }
+            100% {
+                text-shadow: 0 0 5px rgba(187, 134, 252, 0.5),
+                             0 0 10px rgba(187, 134, 252, 0.5),
+                             0 0 15px rgba(187, 134, 252, 0.5),
+                             0 0 20px rgba(187, 134, 252, 0.5),
+                             0 0 25px rgba(187, 134, 252, 0.5),
+                             0 0 30px rgba(187, 134, 252, 0.5),
+                             0 0 35px rgba(187, 134, 252, 0.5);
+            }
+        }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <center>
+        <div id="topBar">
+            <button class="buttonthing active" id="home">Home</button>
+            <button class="buttonthing" id="kahoot">Virus Creator</button>
+            <button class="buttonthing" id="simulator">Simulator Creator</button>
+            <button class="buttonthing" id="pc-crasher">PC Crasher</button>
+            <button class="buttonthing" id="premium">Premium</button>
+        </div>
+    </center>
+
+    <center>
+        <div id="sideBar">
+            <button class="buttonthing active" id="home">Home</button>
+            <button class="buttonthing" id="kahoot">Virus Creator</button>
+            <button class="buttonthing" id="simulator">Simulator Creator</button>
+            <button class="buttonthing" id="pc-crasher">PC Crasher</button>
+            <button class="buttonthing" id="premium">Premium</button>
+        </div>
+    </center>
+
+    
+    <center><div style=" width: 100%; height: 20vh; justify-content: center; align-items: center;">
+        <center><h1 class="bigFontSize">LinCode Pro</h1></center>
+        </div></center>
+
+    <div id="generatorContainer">
+        
+        <center><div style="height: 0.3vh; width: 20%; background-color: rgba(255, 255, 255, 0.034); margin-bottom: 3vh;"></div></center>
+        <center><h1 style="margin-top: 1vh; font-size: 2.56vh;">Current Available Creators</h1></center>
+        <center><button id="virus" class="quicknav">Virus Creator</button></center>
+        <center><button id="simulator2" class="quicknav">Simulator Creator</button></center>
+        <center><button id="sub" class="quicknav">Premium</button></center>
+        <center><div style="height: 0.3vh; width: 20%; background-color: rgba(255, 255, 255, 0.034); margin-top: 3vh;"></div></center>
+        
+    </div>
+
+    <script>
+        const hasBoughtPlan = localStorage.getItem('hasBoughtPro');
+        if (!hasBoughtPlan) {
+            window.location.href = '../../home.html';
+        }
+
+        document.getElementById('editLayout').addEventListener('click', function() {
+            alert('Edit Layout functionality triggered!'); // Replace this with your desired functionality
+        });
+
+    </script>
+        
+        <!-- Chatbox -->
+        <center>
+            <div id="chatbox">
+                <h1 style="font-size: 2vh;">Update Logs</h1>
+                <div id="chatlogs">
+                    <p class="updatelogFont" style="color: #ffffff; font-size: 2vh;">6 / 03 / 2024</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 2vh;">Added</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">protection against link sharing for LinCode Pro (antisharing)</p>
+                    <div style="height: 0.3vh; width: 70%; background-color: rgba(255, 255, 255, 0.034); "></div>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 2vh;">Bug Fixes</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">topbar buttons glitch fixed</p>
+                    <div style="height: 0.3vh; width: 70%; background-color: rgba(255, 255, 255, 0.034); "></div>
+                </div>
+                <div id="chatlogs">
+                    <p class="updatelogFont" style="color: #ffffff; font-size: 2vh;">6 / 02 / 2024</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 2vh;">Added</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">protection against link sharing for LinCode Pro (antisharing)</p>
+                    <div style="height: 0.3vh; width: 70%; background-color: rgba(255, 255, 255, 0.034); "></div>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 2vh;">Bug Fixes</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">simulator creator bug fixed</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">pro purchase error bug fixed</p>
+                    <div style="height: 0.3vh; width: 70%; background-color: rgba(255, 255, 255, 0.034); "></div>
+                </div>
+                <div id="chatlogs">
+                    <p class="updatelogFont" style="color: #ffffff; font-size: 2vh;">5 / 30 / 2024</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 2vh;">Added</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">premium subscription</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">added simulator creator</p>
+                    <div style="height: 0.3vh; width: 70%; background-color: rgba(255, 255, 255, 0.034); "></div>
+                    <p class="updatelogFont" style="color: #ff7c7c; font-size: 2vh;">Removed</p>
+                    <p class="updatelogFont" style="color: #ff7c7c; font-size: 1.5vh;">nun</p>
+                </div>
+                <div id="chatlogs">
+                    <p class="updatelogFont" style="color: #ffffff; font-size: 2vh;">5 / 29 / 2024</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 2vh;">Added</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">update log</p>
+                    
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">shit at the bottom of the page</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">contact page</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">moved "terms of service" button</p>
+                    <div style="height: 0.3vh; width: 70%; background-color: rgba(255, 255, 255, 0.034); "></div>
+                    <p class="updatelogFont" style="color: #ff7c7c; font-size: 2vh;">Removed</p>
+                    <p class="updatelogFont" style="color: #ff7c7c; font-size: 1.5vh;">long ahh paragraph at home page</p>
+                </div>
+                <div id="chatlogs">
+                    <p class="updatelogFont" style="color: #ffffff; font-size: 2vh;">5 / 28 / 2024</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 2vh;">Added</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">virus creator</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">terms of service</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">home page</p>
+                    <div style="height: 0.3vh; width: 70%; background-color: rgba(255, 255, 255, 0.034); "></div>
+                    <p class="updatelogFont" style="color: #ff7c7c; font-size: 2vh;">Removed</p>
+                    <p class="updatelogFont" style="color: #ff7c7c; font-size: 1.5vh;">nun</p>
+                </div>
+
+                
+            </div>
+        </center>
+
+
+        <div class="bottomshit">
+        <center>
+            <div>
+                <h1 style="font-size: 1.3vh; ">LinCode Pro</h1>
+                <button style="width: 20%;" id="tos">Terms of Service</button>
+                <button style="width: 20%;">Contact</button>
+        </div>
+        </center>
+        </div>
+        
+
+        <script>
+            document.getElementById('home').addEventListener('click', function() {
+            window.location.href = 'home.html'; // Replace 'home.html' with the actual URL of your home page
+        });
+    
+        document.getElementById('kahoot').addEventListener('click', function() {
+            window.location.href = 'viruscreator.html'; // Replace 'kahoot.html' with the actual URL of your Kahoot Cheats page
+        });
+
+
+        document.getElementById('premium').addEventListener('click', function() {
+            window.location.href = 'premium.html'; // Replace 'kahoot.html' with the actual URL of your Kahoot Cheats page
+        });
+
+        document.getElementById('simulator').addEventListener('click', function() {
+            window.location.href = 'simulatorcreator.html';
+        });
+        document.getElementById('simulator2').addEventListener('click', function() {
+            window.location.href = 'simulatorcreator.html';
+        });
+
+        document.getElementById('pc-crasher').addEventListener('click', function() {
+            window.location.href = 'pc-crasher.html';
+        });
+
+        document.getElementById('virus').addEventListener('click', function() {
+            window.location.href = 'viruscreator.html'; // Replace 'kahoot.html' with the actual URL of your Kahoot Cheats page
+        });
+    
+        document.getElementById('tos').addEventListener('click', function() {
+            window.location.href = 'tos.html'; // Replace 'tos.html' with the actual URL of your Terms of Service page
+        });
+        </script>
+</body>
+</html>
+
