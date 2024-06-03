@@ -59,7 +59,24 @@
             align-items: center;
             display: flex;
         }
+        #sideBar {
+    width: 13%;
+    height: 100vh;
+    background-color: #e4000000;
+    z-index: 1000; /* Ensure it appears above other content */
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center items vertically */
+    margin-left: 2vh;
+    opacity: 0;
+}
 
+#sideBar button {
+    width: 65%; /* Set width to 50% of the sidebar */
+    margin: 5px 0; /* Add margin to create space between buttons */
+}
         #topBar button {
             margin: 0 0.7vh; /* Add spacing between buttons */
             
@@ -251,6 +268,13 @@
         <button class="buttonthing" id="pc-crasher">PC Crasher</button>
         <button class="buttonthing" id="premium">Premium</button>
     </div>
+    <div id="sideBar">
+        <button class="buttonthing" id="homes">Home</button>
+        <button class="buttonthing active" id="kahoots">Virus Creator</button>
+        <button class="buttonthing" id="simulators">Simulator Creator</button>
+        <button class="buttonthing" id="pc-crashers">PC Crasher</button>
+        <button class="buttonthing" id="premiums">Premium</button>
+    </div>
     
     <div class="container" id="generatorContainer">
         <h1 id="ballsacks">Virus Creator</h1>
@@ -290,7 +314,67 @@
 
 
     <script>
+         document.addEventListener('DOMContentLoaded', function() {
+    // Check if the layout preference exists in localStorage
+    const layoutPreference = localStorage.getItem('layoutPreference');
 
+    // If the layout preference exists, apply it
+    if (layoutPreference) {
+        applyLayoutPreference(layoutPreference);
+    }
+
+    // Toggle the class to show/hide the layout options div
+    document.getElementById('editLayout').addEventListener('click', function() {
+        document.getElementById('layoutOptions').classList.toggle('show');
+    });
+
+    // Handle layout option clicks
+    document.getElementById('layout1').addEventListener('click', function() {
+        applyLayoutPreference('layout1');
+    });
+
+    document.getElementById('layout2').addEventListener('click', function() {
+        applyLayoutPreference('layout2');
+    });
+
+    // Function to apply the layout preference
+    function applyLayoutPreference(layout) {
+        const topBar = document.getElementById('topBar');
+        const sideBar = document.getElementById('sideBar');
+        const lincodetitle = document.getElementById('title_lincodepro');
+
+        if (layout === 'layout1') {
+            topBar.style.opacity = '1';
+            sideBar.style.opacity = '0';
+            lincodetitle.style.marginTop = '15vh';
+        } else if (layout === 'layout2') {
+            topBar.style.opacity = '0';
+            sideBar.style.opacity = '1';
+            lincodetitle.style.marginTop = '5vh';
+        }
+
+        // Save the layout preference in localStorage
+        localStorage.setItem('layoutPreference', layout);
+
+        // Hide the layout options div
+        document.getElementById('layoutOptions').classList.remove('show');
+    }
+});
+document.getElementById('homes').addEventListener('click', function() {
+            window.location.href = 'home.html'; // Replace 'home.html' with the actual URL of your home page
+        });
+        document.getElementById('kahoots').addEventListener('click', function() {
+            window.location.href = 'viruscreator.html'; // Replace 'home.html' with the actual URL of your home page
+        });
+        document.getElementById('simulators').addEventListener('click', function() {
+            window.location.href = 'simulatorcreator.html'; // Replace 'home.html' with the actual URL of your home page
+        });
+        document.getElementById('pc-crashers').addEventListener('click', function() {
+            window.location.href = 'pc-crasher.html'; // Replace 'home.html' with the actual URL of your home page
+        });
+        document.getElementById('premiums').addEventListener('click', function() {
+            window.location.href = 'premium.html'; // Replace 'home.html' with the actual URL of your home page
+        });
 document.getElementById('simulator').addEventListener('click', function() {
             window.location.href = 'simulatorcreator.html';
         });

@@ -266,6 +266,57 @@
                              0 0 35px rgba(255, 223, 0, 0.5);
             }
         }
+ /* Your existing CSS styles */
+ #layoutOptions {
+            position: fixed;
+            top: -100%; /* Initially hide the div above the viewport */
+            width: 40%;
+            background-color: #00000000;
+            transition: all 0.7843s; /* Add smooth transition for sliding effect */
+            z-index: 9999;
+            transform: translate(116%); /* Adjust for both horizontal and vertical centering */
+            border-radius: 1.6vh;
+            height: max-content;
+            width: max-content;
+        }
+
+        #layoutOptions.show {
+            top: 25%; /* Slide the div down to show it */
+        }
+
+        .option {
+            width: 100%;
+            height: 35vh;
+            cursor: pointer;
+            transition: all 0.3s ease; /* Add smooth transition for sliding effect */
+            border-radius: 1.6vh;
+            margin-bottom: 1vh;
+        }
+
+        .option:hover {
+            background-color: #f0f0f0;
+        }
+        #sideBar {
+    width: 13%;
+    height: 100vh;
+    background-color: #e4000000;
+    z-index: 1000; /* Ensure it appears above other content */
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center items vertically */
+    margin-left: 2vh;
+    opacity: 0;
+}
+
+#sideBar button {
+    width: 65%; /* Set width to 50% of the sidebar */
+    margin: 5px 0; /* Add margin to create space between buttons */
+}
+body::-webkit-scrollbar {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -280,8 +331,16 @@
         </div>
     </center>
 
+    <div id="sideBar">
+        <button class="buttonthing" id="homes">Home</button>
+        <button class="buttonthing" id="kahoots">Virus Creator</button>
+        <button class="buttonthing" id="simulators">Simulator Creator</button>
+        <button class="buttonthing" id="pc-crashers">PC Crasher</button>
+        <button class="buttonthing active" id="premiums">Premium</button>
+    </div>
+
     <div id="generatorContainer">
-        <center><h1 class="bigFontSize">LinCode Premium</h1></center>
+        <center><h1 class="bigFontSize" id="title_lincodepro">LinCode Premium</h1></center>
         <center><div style="height: 0.3vh; width: 20%; background-color: rgba(255, 255, 255, 0.034); margin-bottom: 3vh;"></div></center>
         <center><h1 style="margin-top: 1vh; font-size: 2.56vh;">Premium Plans</h1></center>
         <div style="display: flex; justify-content: center;">
@@ -290,15 +349,17 @@
                     <center><div style="height: 0.3vh; width: 20%; background-color: rgba(255, 255, 255, 0.034); margin-bottom: 3vh;"></div></center>
                     <center><strong><p style="color:#c1fcb2">* Virus Creator Access *</p></strong></center>
                     <center><strong><p style="color:#fcb2b2">* You Are An Idiot Virus File *</p></strong></center>
+                    <center><strong><p style="color:#fcb2b2">* Layout Editor *</p></strong></center>
                     <center><strong><p style="color:#fcb2b2">* Simulator Creator Access *</p></strong></center>
                     <center><strong><p style="color:#fcb2b2">* Kahoot Cheats *</p></strong></center>
                     <center><strong><p style="color:#fcb2b2">* PC Crasher Access *</p></strong></center>
+                    <center><strong><p style="color:#fcb2b2">* Frequent Updates *</p></strong></center>
                     <center><strong><p style="color:#fcb2b2">* Teachers PC Password *</p></strong></center>
                     <center><strong><p style="color:#fcb2b2">* Students PC Password *</p></strong></center>
                     <center><p></p></center>
                     <center><p></p></center>
-                    <center><strong><p class="price">1 KR</p></strong></center>
-                    <center><button class="purchase-btn" id="plus" data-price="1">Purchase LinCode Plus</button></center>
+                    <center><strong><p class="price">0 KR</p></strong></center>
+                    <center><button class="purchase-btn" id="plus" data-price="1">Revert</button></center>
                 </div>
 
                 <div class="conPurchase">
@@ -306,9 +367,11 @@
                     <center><div style="height: 0.3vh; width: 20%; background-color: rgba(255, 255, 255, 0.034); margin-bottom: 3vh;"></div></center>
                     <center><strong><p style="color:#c1fcb2">* Virus Creator Access *</p></strong></center>
                     <center><strong><p style="color:#c1fcb2">* You Are An Idiot Virus File *</p></strong></center>
+                    <center><strong><p style="color:#c1fcb2">* Layout Editor *</p></strong></center>
                     <center><strong><p style="color:#c1fcb2">* Simulator Creator Access *</p></strong></center>
                     <center><strong><p style="color:#c1fcb2">* Kahoot Cheats *</p></strong></center>
                     <center><strong><p style="color:#c1fcb2">* PC Crasher Access *</p></strong></center>
+                    <center><strong><p style="color:#c1fcb2">* Frequent Updates *</p></strong></center>
                     <center><strong><p style="color:#fcb2b2">* Teachers PC Password *</p></strong></center>
                     <center><strong><p style="color:#fcb2b2">* Students PC Password *</p></strong></center>
                     <center><strong><p class="price">10 KR</p></strong></center>
@@ -320,6 +383,80 @@
         
 
     <script>
+        const hasBoughtPlan = localStorage.getItem('hasBoughtPro');
+        if (!hasBoughtPlan) {
+            window.location.href = '../../home.html';
+        }
+        document.getElementById('plus').addEventListener('click', function() {
+        // Remove the "hasBoughtPro" item from localStorage
+        localStorage.removeItem('hasBoughtPro');
+        // Reload the page
+        location.reload();
+    });
+
+        document.addEventListener('DOMContentLoaded', function() {
+    // Check if the layout preference exists in localStorage
+    const layoutPreference = localStorage.getItem('layoutPreference');
+
+    // If the layout preference exists, apply it
+    if (layoutPreference) {
+        applyLayoutPreference(layoutPreference);
+    }
+
+    // Toggle the class to show/hide the layout options div
+    document.getElementById('editLayout').addEventListener('click', function() {
+        document.getElementById('layoutOptions').classList.toggle('show');
+    });
+
+    // Handle layout option clicks
+    document.getElementById('layout1').addEventListener('click', function() {
+        applyLayoutPreference('layout1');
+    });
+
+    document.getElementById('layout2').addEventListener('click', function() {
+        applyLayoutPreference('layout2');
+    });
+    
+
+    // Function to apply the layout preference
+    function applyLayoutPreference(layout) {
+        const topBar = document.getElementById('topBar');
+        const sideBar = document.getElementById('sideBar');
+        const lincodetitle = document.getElementById('title_lincodepro');
+
+        if (layout === 'layout1') {
+            topBar.style.opacity = '1';
+            sideBar.style.opacity = '0';
+            lincodetitle.style.marginTop = '15vh';
+        } else if (layout === 'layout2') {
+            topBar.style.opacity = '0';
+            sideBar.style.opacity = '1';
+            lincodetitle.style.marginTop = '5vh';
+        }
+
+        // Save the layout preference in localStorage
+        localStorage.setItem('layoutPreference', layout);
+
+        // Hide the layout options div
+        document.getElementById('layoutOptions').classList.remove('show');
+    }
+});
+
+document.getElementById('homes').addEventListener('click', function() {
+            window.location.href = 'home.html'; // Replace 'home.html' with the actual URL of your home page
+        });
+        document.getElementById('kahoots').addEventListener('click', function() {
+            window.location.href = 'viruscreator.html'; // Replace 'home.html' with the actual URL of your home page
+        });
+        document.getElementById('simulators').addEventListener('click', function() {
+            window.location.href = 'simulatorcreator.html'; // Replace 'home.html' with the actual URL of your home page
+        });
+        document.getElementById('pc-crashers').addEventListener('click', function() {
+            window.location.href = 'pc-crasher.html'; // Replace 'home.html' with the actual URL of your home page
+        });
+        document.getElementById('premiums').addEventListener('click', function() {
+            window.location.href = 'premium.html'; // Replace 'home.html' with the actual URL of your home page
+        });
          document.getElementById('pc-crasher').addEventListener('click', function() {
             window.location.href = 'pc-crasher.html';
         });
@@ -347,11 +484,6 @@
         document.getElementById('tos').addEventListener('click', function() {
             window.location.href = 'tos.html';
         });
-
-        const hasBoughtPlan = localStorage.getItem('hasBoughtPro');
-        if (!hasBoughtPlan) {
-            window.location.href = '../../home.html';
-        }
     </script>
 </body>
 </html>

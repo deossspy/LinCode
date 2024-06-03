@@ -158,22 +158,6 @@
         }
         
 
-        #sideBar{
-            width: 40%;
-            height: 100vh;
-            background-color: #ff0000bb;
-            z-index: 1000; /* Ensure it appears above other content */
-            position: fixed;
-            top: 0;
-            justify-content: center;
-            align-items: center;
-            display: flex;
-        }
-
-        #sideBar button {
-            margin: 0 0.7vh; /* Add spacing between buttons */
-            
-        }
 
 
         
@@ -191,6 +175,7 @@
         #chatbox {
             margin-top: 20vh;
             width: 90%;
+            margin-left: 3vh;
             max-width: 55vh;
             background: #1E1E1E;
             border-radius: 1vh;
@@ -271,6 +256,63 @@
         body::-webkit-scrollbar {
             display: none;
         }
+        #sideBar {
+    width: 13%;
+    height: 100vh;
+    background-color: #e4000000;
+    z-index: 1000; /* Ensure it appears above other content */
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center items vertically */
+    margin-left: 2vh;
+    opacity: 0;
+}
+
+#sideBar button {
+    width: 65%; /* Set width to 50% of the sidebar */
+    margin: 5px 0; /* Add margin to create space between buttons */
+}
+ /* Your existing CSS styles */
+ #layoutOptions {
+            position: fixed;
+            top: -100%; /* Initially hide the div above the viewport */
+            width: 40%;
+            background-color: #00000000;
+            transition: all 0.7843s; /* Add smooth transition for sliding effect */
+            z-index: 9999;
+            transform: translate(116%); /* Adjust for both horizontal and vertical centering */
+            border-radius: 1.6vh;
+            height: max-content;
+            width: max-content;
+        }
+
+        #layoutOptions.show {
+            top: 25%; /* Slide the div down to show it */
+        }
+
+        .option {
+            width: 100%;
+            height: 35vh;
+            cursor: pointer;
+            transition: all 0.3s ease; /* Add smooth transition for sliding effect */
+            border-radius: 1.6vh;
+            margin-bottom: 1vh;
+        }
+
+        .option:hover {
+            background-color: #f0f0f0;
+        }
+
+        .layoutimg{
+            height: 100%;
+            width: auto;
+            border-radius: 1vh;
+            border: solid 2px #fff;
+        }
+
+
     </style>
 </head>
 <body>
@@ -285,22 +327,31 @@
         </div>
     </center>
 
-    <center>
+    
         <div id="sideBar">
-            <button class="buttonthing active" id="home">Home</button>
-            <button class="buttonthing" id="kahoot">Virus Creator</button>
-            <button class="buttonthing" id="simulator">Simulator Creator</button>
-            <button class="buttonthing" id="pc-crasher">PC Crasher</button>
-            <button class="buttonthing" id="premium">Premium</button>
+            <button class="buttonthing active" id="homes">Home</button>
+            <button class="buttonthing" id="kahoots">Virus Creator</button>
+            <button class="buttonthing" id="simulators">Simulator Creator</button>
+            <button class="buttonthing" id="pc-crashers">PC Crasher</button>
+            <button class="buttonthing" id="premiums">Premium</button>
         </div>
-    </center>
+    
 
     
     <center><div style=" width: 100%; height: 20vh; justify-content: center; align-items: center;">
-        <center><h1 class="bigFontSize">LinCode Pro</h1></center>
+        <center><h1 class="bigFontSize" id="title_lincodepro">LinCode Pro</h1></center>
+        </div></center>
+
+
+        <center><div id="layoutOptions">
+            <div class="option" id="layout1"><img src="topBar.png" class="layoutimg"></div>
+            <div class="option" id="layout2"><img src="sideBar.png" class="layoutimg"></div>
         </div></center>
 
     <div id="generatorContainer">
+        
+        <center><button id="editLayout" class="quicknav">Edit Layout</button></center>
+        <center><div style="height: 0.3vh; width: 20%; background-color: rgba(255, 255, 255, 0.034); margin-top: 3vh;"></div></center>
         
         <center><div style="height: 0.3vh; width: 20%; background-color: rgba(255, 255, 255, 0.034); margin-bottom: 3vh;"></div></center>
         <center><h1 style="margin-top: 1vh; font-size: 2.56vh;">Current Available Creators</h1></center>
@@ -312,25 +363,74 @@
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Check if the layout preference exists in localStorage
+    const layoutPreference = localStorage.getItem('layoutPreference');
+
+    // If the layout preference exists, apply it
+    if (layoutPreference) {
+        applyLayoutPreference(layoutPreference);
+    }
+
+    // Toggle the class to show/hide the layout options div
+    document.getElementById('editLayout').addEventListener('click', function() {
+        document.getElementById('layoutOptions').classList.toggle('show');
+    });
+
+    // Handle layout option clicks
+    document.getElementById('layout1').addEventListener('click', function() {
+        applyLayoutPreference('layout1');
+    });
+
+    document.getElementById('layout2').addEventListener('click', function() {
+        applyLayoutPreference('layout2');
+    });
+
+    // Function to apply the layout preference
+    function applyLayoutPreference(layout) {
+        const topBar = document.getElementById('topBar');
+        const sideBar = document.getElementById('sideBar');
+        const lincodetitle = document.getElementById('title_lincodepro');
+
+        if (layout === 'layout1') {
+            topBar.style.opacity = '1';
+            sideBar.style.opacity = '0';
+            lincodetitle.style.marginTop = '15vh';
+        } else if (layout === 'layout2') {
+            topBar.style.opacity = '0';
+            sideBar.style.opacity = '1';
+            lincodetitle.style.marginTop = '5vh';
+        }
+
+        // Save the layout preference in localStorage
+        localStorage.setItem('layoutPreference', layout);
+
+        // Hide the layout options div
+        document.getElementById('layoutOptions').classList.remove('show');
+    }
+});
+
+
+
+
         const hasBoughtPlan = localStorage.getItem('hasBoughtPro');
         if (!hasBoughtPlan) {
             window.location.href = '../../home.html';
         }
 
-        document.getElementById('editLayout').addEventListener('click', function() {
-            alert('Edit Layout functionality triggered!'); // Replace this with your desired functionality
-        });
+
 
     </script>
         
         <!-- Chatbox -->
         <center>
+           <div style="display: flex;  justify-content: center;">
+
+
             <div id="chatbox">
-                <h1 style="font-size: 2vh;">Update Logs</h1>
+                <h1 style="font-size: 2vh;"> Update Logs [BASIC]</h1>
                 <div id="chatlogs">
                     <p class="updatelogFont" style="color: #ffffff; font-size: 2vh;">6 / 03 / 2024</p>
-                    <p class="updatelogFont" style="color: #7cff7c; font-size: 2vh;">Added</p>
-                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">protection against link sharing for LinCode Pro (antisharing)</p>
                     <div style="height: 0.3vh; width: 70%; background-color: rgba(255, 255, 255, 0.034); "></div>
                     <p class="updatelogFont" style="color: #7cff7c; font-size: 2vh;">Bug Fixes</p>
                     <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">topbar buttons glitch fixed</p>
@@ -338,8 +438,6 @@
                 </div>
                 <div id="chatlogs">
                     <p class="updatelogFont" style="color: #ffffff; font-size: 2vh;">6 / 02 / 2024</p>
-                    <p class="updatelogFont" style="color: #7cff7c; font-size: 2vh;">Added</p>
-                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">protection against link sharing for LinCode Pro (antisharing)</p>
                     <div style="height: 0.3vh; width: 70%; background-color: rgba(255, 255, 255, 0.034); "></div>
                     <p class="updatelogFont" style="color: #7cff7c; font-size: 2vh;">Bug Fixes</p>
                     <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">simulator creator bug fixed</p>
@@ -377,9 +475,22 @@
                     <p class="updatelogFont" style="color: #ff7c7c; font-size: 2vh;">Removed</p>
                     <p class="updatelogFont" style="color: #ff7c7c; font-size: 1.5vh;">nun</p>
                 </div>
-
-                
             </div>
+            <div id="chatbox">
+                <h1 style="font-size: 2vh;">Update Logs [PRO]</h1>
+                <div id="chatlogs">
+                    <p class="updatelogFont" style="color: #ffffff; font-size: 2vh;">6 / 03 / 2024</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 2vh;">Added</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">layout editor</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">protection against link sharing for LinCode Pro (antisharing)</p>
+                    <div style="height: 0.3vh; width: 70%; background-color: rgba(255, 255, 255, 0.034); "></div>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 2vh;">Bug Fixes</p>
+                    <p class="updatelogFont" style="color: #7cff7c; font-size: 1.5vh;">topbar buttons glitch fixed</p>
+                    <div style="height: 0.3vh; width: 70%; background-color: rgba(255, 255, 255, 0.034); "></div>
+                </div>
+            </div>
+
+        </div>
         </center>
 
 
@@ -425,6 +536,24 @@
     
         document.getElementById('tos').addEventListener('click', function() {
             window.location.href = 'tos.html'; // Replace 'tos.html' with the actual URL of your Terms of Service page
+        });
+
+
+
+        document.getElementById('homes').addEventListener('click', function() {
+            window.location.href = 'home.html'; // Replace 'home.html' with the actual URL of your home page
+        });
+        document.getElementById('kahoots').addEventListener('click', function() {
+            window.location.href = 'viruscreator.html'; // Replace 'home.html' with the actual URL of your home page
+        });
+        document.getElementById('simulators').addEventListener('click', function() {
+            window.location.href = 'simulatorcreator.html'; // Replace 'home.html' with the actual URL of your home page
+        });
+        document.getElementById('pc-crashers').addEventListener('click', function() {
+            window.location.href = 'pc-crasher.html'; // Replace 'home.html' with the actual URL of your home page
+        });
+        document.getElementById('premiums').addEventListener('click', function() {
+            window.location.href = 'premium.html'; // Replace 'home.html' with the actual URL of your home page
         });
         </script>
 </body>
