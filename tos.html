@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinCode | ToS</title>
+    <title>LinCode Basic | ToS</title>
     <link rel="icon" href="lincode.jpg" type="image/x-icon">
     <style>
         body {
@@ -26,7 +26,9 @@
             transition: opacity 1s ease, transform 1s ease;
             margin: 60vh auto 0; /* Margin added to top */
         }
-
+        body::-webkit-scrollbar {
+            display: none;
+        }
         html {
     scroll-behavior: smooth;
 }
@@ -159,9 +161,7 @@
 
     <center>
         <div id="topBar">
-            <button class="buttonthing" id="home">Home</button>
-            <button class="buttonthing" id="kahoot">Virus Creator</button>
-            <button class="buttonthing active" id="tos">Terms of Service</button>
+            <button class="buttonthing" id="home">Back to Home</button>
         </div>
     </center>
     
@@ -206,6 +206,11 @@ document.getElementById('kahoot').addEventListener('click', function() {
 document.getElementById('tos').addEventListener('click', function() {
     window.location.href = 'tos.html'; // Replace 'tos.html' with the actual URL of your Terms of Service page
 });
+
+const hasBoughtPlan = localStorage.getItem('hasBoughtPro');
+        if (hasBoughtPlan) {
+            window.location.href = 'subscription_site/pro/home.html';
+        }
     </script>
 </body>
 </html>

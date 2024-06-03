@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-
+    <title>Clicker Game</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,8 +11,14 @@
             color: #E0E0E0;
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column; /* Added to stack image and points vertically */
         }
-        button{
+
+        button {
             width: 25%;
             padding: 1.2vh;
             margin-top: .5vh;
@@ -23,26 +26,103 @@
             border: 1px solid #333;
             background: #333;
             color: #E0E0E0;
-            transition: all ease 0.3s
-
+            transition: all ease 0.3s;
         }
-        button:hover{
+
+        button:hover {
             background: #222222;
             cursor: pointer;
         }
 
-        .image{
-
-            width: 32vh;
-            height: 32vh;
-
+        .image {
+            width: 30vh;
+            height: 30vh;
+            border-radius: 12%;
+            cursor: pointer; /* Indicate the image is clickable */
+            transition: transform 0.1s ease; /* Add transition for animation */
         }
 
-    </style>
+        .image:active {
+            transform: scale(0.9); /* Scale down when clicked */
+        }
 
-<center>
-    <img src="" id="image">
-</center>
-    
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            flex-direction: column; /* Stack the image and points */
+        }
+
+        #totalPoints {
+            font-size: 1.4rem;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            margin-top: 2vh;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clicking Game Blah Blah</h1>
+    <div class="center-container">
+        <img src="lincode.jpg" id="image" class="image" draggable="false" onclick="incrementPoints()">
+        <p id="totalPoints">Points: 0</p>
+        <div style="height: 0.3vh; width: 70%; background-color: rgba(255, 255, 255, 0.034); "></div>
+        <button onclick="upgradeClick()" style="margin-top: 1rem;">Upgrade Click</button>
+        <p id="upgradeCost">Upgrade Cost: 10 Points</p>
+    </div>
+
+    <script>
+        const hasBoughtPlan = localStorage.getItem('hasBoughtPro');
+        if (hasBoughtPlan) {
+            window.location.href = 'subscription_site/pro/home.html';
+        }
+        let points = localStorage.getItem('points') ? parseInt(localStorage.getItem('points')) : 0;
+        let clickUpgradeCost = 10; // Initial cost of the click upgrade
+        let clickMultiplier = 1; // Initial click multiplier
+
+        document.getElementById('totalPoints').textContent = 'Points: ' + points;
+        document.getElementById('upgradeCost').textContent = 'Upgrade Cost: ' + clickUpgradeCost + ' Points';
+
+        let clickable = true;
+
+        function incrementPoints() {
+            if (!clickable) return;
+
+            points += clickMultiplier; // Increment points by the click multiplier
+            localStorage.setItem('points', points);
+            document.getElementById('totalPoints').textContent = 'Points: ' + points;
+
+            clickable = false;
+            setTimeout(() => {
+                clickable = true;
+            }, 33);
+        }
+
+        function upgradeClick() {
+            if (points >= clickUpgradeCost) {
+                points -= clickUpgradeCost; // Deduct the cost of the upgrade
+                clickMultiplier++; // Increase the click multiplier
+                clickUpgradeCost *= 2; // Increase the upgrade cost (can be adjusted)
+                localStorage.setItem('points', points);
+                document.getElementById('totalPoints').textContent = 'Points: ' + points;
+                document.getElementById('upgradeCost').textContent = 'Upgrade Cost: ' + clickUpgradeCost + ' Points';
+            } else {
+                alert('Not enough points to upgrade!');
+            }
+        }
+
+        // Animation for the image click
+        const image = document.getElementById('image');
+        image.addEventListener('click', () => {
+            image.classList.add('clicked');
+            setTimeout(() => {
+                image.classList.remove('clicked');
+            }, 100);
+        });
+
+
+        
+    </script>
 </body>
 </html>

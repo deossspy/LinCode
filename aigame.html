@@ -256,6 +256,11 @@ document.getElementById('aigame').addEventListener('click', function() {
     window.location.href = 'aigame.html'; // Replace 'aigame.html' with the actual URL of your AI Game Generator page
 });
 
+const hasBoughtPlan = localStorage.getItem('hasBoughtPro');
+        if (hasBoughtPlan) {
+            window.location.href = 'subscription_site/pro/home.html';
+        }
+
 document.getElementById('kahoot').addEventListener('click', function() {
     window.location.href = 'kahoot.html'; // Replace 'kahoot.html' with the actual URL of your Kahoot Cheats page
 });

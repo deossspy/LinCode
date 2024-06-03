@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinCode Basic | Premium</title>
+    <link rel="icon" href="lincode.jpg" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #E0E0E0;
+            margin: 0;
+            padding: 0;
+            height: 20vh;
+        }
+        .container {
+            background: #1E1E1E;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            max-width: 500px;
+            padding: 20px;
+            text-align: center;
+            opacity: 0; /* Initially hidden */
+            transform: translateY(-20px); /* Initially positioned above */
+            transition: opacity 1s ease, transform 1s ease; /* Smooth transition */
+            margin: 60vh auto 0; /* Margin added to top */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        h1 {
+            color: #e4e4e4;
+        }
+        h1:hover{
+            cursor:default;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #E0E0E0;
+        }
+        input, select, button {
+            width: 92%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #333;
+            background: #333;
+            color: #E0E0E0;
+        }
+        button {
+            background-color: #BB86FC;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all ease 0.3s;
+        }
+        button:hover {
+            background-color: #BB86FC;
+        }
+        #results {
+            margin-top: 20px;
+            text-align: left;
+            color: #E0E0E0;
+        }
+        .download-btn {
+            display: none;
+            margin-top: 10px;
+            background-color: #03DAC6;
+        }
+        .download-btn:hover {
+            background-color: #02B3A4;
+        }
+        .loading {
+            color: #888;
+            font-style: italic;
+        }
+        /* Dropdown styling */
+        select {
+            width: 97%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #333;
+            background: #333;
+            color: #E0E0E0;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23E0E0E0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+
+        /* Remove default arrow for IE */
+        select::-ms-expand {
+            display: none;
+        }
+
+        .fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #termsOfService {
+            margin: 4vh 0; /* Margin added */
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-weight: 500;
+            font-size: large;
+            width: 60%;
+        }
+
+        #termsOfServiceLabel{
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-weight: 600;
+            font-size: xx-large;
+            width: 60%;
+            margin-top: 10vh;
+        }
+
+        .buttonthing {
+            color: #E0E0E0;
+            width: 20%;
+            background-color: #1616167c;
+            border: none;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .buttonthing.active{
+            background-color: #BB86FC;
+        }
+
+        #topBar{
+            width: 100%;
+            height: 8vh;
+            background-color: #00000010;
+            z-index: 1000; /* Ensure it appears above other content */
+            position: fixed;
+            top: 0;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        #topBar button {
+            margin: 0 5px; /* Add spacing between buttons */
+        }
+
+        
+
+        .purchase-btn{
+            width: 100%;
+            background-color: #2c2c2c;
+            bottom: 0;
+            position: relative;
+        }
+
+        .purchase-btn:hover{
+            background-color: #BB86FC;
+        }
+
+
+        /* Chatbox styling */
+        #chatbox {
+            margin-top: 20vh;
+            width: 90%;
+            max-width: 55vh;
+            background: #1E1E1E;
+            border-radius: 1vh;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        #chatbox #chatlogs {
+            height: fit-content;
+            overflow-y: auto;
+            border: 1px solid #333;
+            border-radius: 1.2vh;
+            padding: 10px;
+            margin-bottom: 5vh;
+            background: #222;
+            color: #E0E0E0;
+        }
+        .updatelogFont{
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-weight: 700;
+            transition: all ease 0.3s;
+        }
+        .updatelogFont:hover{
+            cursor:default;
+        }
+        .bottomshit {
+    width: 100%;
+    height: 16vh;
+    margin-top: 20vh;
+    background-color: #0000004d;
+}
+
+
+.conPurchase{
+    width: 50vh;
+    height: max-content;
+    border-radius: 1.2vh;
+    background-color: #1E1E1E;
+    margin-left: 4vh;
+    
+    margin-top:  7vh;
+}
+
+.price{
+    color: #c1fcb2;
+    margin-top: 7vh;
+}
+
+.bigFontSize{
+    margin-top: 15vh;
+            font-size: 5vh;
+            color: gold;
+            text-shadow: 0 0 5px rgba(255, 223, 0, 0.5),
+                         0 0 10px rgba(255, 223, 0, 0.5),
+                         0 0 15px rgba(255, 223, 0, 0.5),
+                         0 0 20px rgba(255, 223, 0, 0.5),
+                         0 0 25px rgba(255, 223, 0, 0.5),
+                         0 0 30px rgba(255, 223, 0, 0.5),
+                         0 0 35px rgba(255, 223, 0, 0.5);
+            animation: shine 2s infinite;
+}
+
+@keyframes shine {
+            0% {
+                text-shadow: 0 0 5px rgba(255, 223, 0, 0.5),
+                             0 0 10px rgba(255, 223, 0, 0.5),
+                             0 0 15px rgba(255, 223, 0, 0.5),
+                             0 0 20px rgba(255, 223, 0, 0.5),
+                             0 0 25px rgba(255, 223, 0, 0.5),
+                             0 0 30px rgba(255, 223, 0, 0.5),
+                             0 0 35px rgba(255, 223, 0, 0.5);
+            }
+            50% {
+                text-shadow: 0 0 10px rgba(255, 223, 0, 0.7),
+                             0 0 20px rgba(255, 223, 0, 0.7),
+                             0 0 30px rgba(255, 223, 0, 0.7),
+                             0 0 40px rgba(255, 223, 0, 0.7),
+                             0 0 50px rgba(255, 223, 0, 0.7),
+                             0 0 60px rgba(255, 223, 0, 0.7),
+                             0 0 70px rgba(255, 223, 0, 0.7);
+            }
+            100% {
+                text-shadow: 0 0 5px rgba(255, 223, 0, 0.5),
+                             0 0 10px rgba(255, 223, 0, 0.5),
+                             0 0 15px rgba(255, 223, 0, 0.5),
+                             0 0 20px rgba(255, 223, 0, 0.5),
+                             0 0 25px rgba(255, 223, 0, 0.5),
+                             0 0 30px rgba(255, 223, 0, 0.5),
+                             0 0 35px rgba(255, 223, 0, 0.5);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <center>
+        <div id="topBar">
+            <button class="buttonthing" id="home">Home</button>
+            <button class="buttonthing" id="kahoot">Virus Creator</button>
+            <button class="buttonthing active" id="premium">Premium</button>
+        </div>
+    </center>
+
+    <div id="generatorContainer">
+        <center><h1 class="bigFontSize">LinCode Premium</h1></center>
+        <center><div style="height: 0.3vh; width: 20%; background-color: rgba(255, 255, 255, 0.034); margin-bottom: 3vh;"></div></center>
+        <center><h1 style="margin-top: 1vh; font-size: 2.56vh;">Premium Plans</h1></center>
+        <div style="display: flex; justify-content: center;">
+                <div class="conPurchase">
+                    <center><h1>LinCode Basic</h1><strong><p style="margin-bottom: 1vh;">* Current *</p></strong></center>
+                    <center><div style="height: 0.3vh; width: 20%; background-color: rgba(255, 255, 255, 0.034); margin-bottom: 3vh;"></div></center>
+                    <center><strong><p style="color:#c1fcb2">* Virus Creator Access *</p></strong></center>
+                    <center><strong><p style="color:#fcb2b2">* You Are An Idiot Virus File *</p></strong></center>
+                    <center><strong><p style="color:#fcb2b2">* Simulator Creator Access *</p></strong></center>
+                    <center><strong><p style="color:#fcb2b2">* Kahoot Cheats *</p></strong></center>
+                    <center><strong><p style="color:#fcb2b2">* PC Crasher Access *</p></strong></center>
+                    <center><strong><p style="color:#fcb2b2">* Teachers PC Password *</p></strong></center>
+                    <center><strong><p style="color:#fcb2b2">* Students PC Password *</p></strong></center>
+                    <center><p></p></center>
+                    <center><strong><p class="price">0 KR</p></strong></center>
+                    <center><button class="purchase-btn" id="plus" data-price="1">Current</button></center>
+                </div>
+
+                <div class="conPurchase">
+                    <center><h1>LinCode Pro</h1><strong><p style="margin-bottom: 1vh;">* Lifetime *</p></strong></center>
+                    <center><div style="height: 0.3vh; width: 20%; background-color: rgba(255, 255, 255, 0.034); margin-bottom: 3vh;"></div></center>
+                    <center><strong><p style="color:#c1fcb2">* Virus Creator Access *</p></strong></center>
+                    <center><strong><p style="color:#c1fcb2">* You Are An Idiot Virus File *</p></strong></center>
+                    <center><strong><p style="color:#c1fcb2">* Simulator Creator Access *</p></strong></center>
+                    <center><strong><p style="color:#c1fcb2">* Kahoot Cheats *</p></strong></center>
+                    <center><strong><p style="color:#c1fcb2">* PC Crasher Access *</p></strong></center>
+                    <center><strong><p style="color:#fcb2b2">* Teachers PC Password *</p></strong></center>
+                    <center><strong><p style="color:#fcb2b2">* Students PC Password *</p></strong></center>
+                    <center><strong><p class="price">10 KR</p></strong></center>
+                    <center><button class="purchase-btn" id="pro" data-price="10">Purchase LinCode Pro</button></center>
+                </div>
+        </div></center>
+
+    </div>
+        
+
+    <script>
+        document.getElementById('home').addEventListener('click', function() {
+            window.location.href = 'home.html';
+        });
+
+        const hasBoughtPlan = localStorage.getItem('hasBoughtPro');
+        if (hasBoughtPlan) {
+            window.location.href = 'subscription_site/pro/home.html';
+        }
+        document.getElementById('pro').addEventListener('click', function() {
+            window.location.href = 'purchase_screen/purchasepro.html';
+        });
+        document.getElementById('plus1').addEventListener('click', function() {
+            window.location.href = 'purchase_screen/purchaseplus.html';
+        });
+        document.getElementById('fgddfg1').addEventListener('click', function() {
+            window.location.href = 'purchase_screen/purchasepremium.html';
+        });
+
+        document.getElementById('kahoot').addEventListener('click', function() {
+            window.location.href = 'viruscreator.html';
+        });
+
+        document.getElementById('simulator').addEventListener('click', function() {
+            window.location.href = 'simulatorcreator.html';
+        });
+
+        document.getElementById('simulator2').addEventListener('click', function() {
+            window.location.href = 'simulatorcreator.html';
+        });
+
+        // Stripe Integration
+        const stripe = Stripe('your-publishable-key-here');
+
+        document.querySelectorAll('.purchase-btn').forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const plan = event.target.getAttribute('data-plan');
+                const price = event.target.getAttribute('data-price');
+                
+                const response = await fetch('/create-checkout-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ plan, price })
+                });
+
+                const session = await response.json();
+
+                // Redirect to Stripe Checkout
+                const result = await stripe.redirectToCheckout({ sessionId: session.id });
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            });
+        });
+
+        document.getElementById('virus').addEventListener('click', function() {
+            window.location.href = 'viruscreator.html';
+        });
+
+        document.getElementById('tos').addEventListener('click', function() {
+            window.location.href = 'tos.html';
+        });
+    </script>
+</body>
+</html>

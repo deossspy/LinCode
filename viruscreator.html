@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinCode | Virus Creator</title>
+    <title>LinCode Basic | Virus Creator</title>
     <link rel="icon" href="lincode.jpg" type="image/x-icon">
     <style>
         body {
@@ -31,7 +31,9 @@
             color: #BB86FC;
         }
 
-        
+        body::-webkit-scrollbar {
+            display: none;
+        }
 
         .buttonthing {
             color: #E0E0E0;
@@ -99,7 +101,7 @@
             transition: all ease 0.3s;
         }
         button:hover {
-            background-color: #9B67E2;
+            background-color: #BB86FC;
         }
         
         #results {
@@ -196,7 +198,48 @@
 .acknowledge-checkbox:checked {
     background-color: #86fc8c; /* Change background color when checked */
 }
+#ballsacks{
+            color: rgb(187, 134, 252);
+            text-shadow: 0 0 2.5px rgba(187, 134, 252, 0.5),
+                         0 0 5px rgba(187, 134, 252, 0.5),
+                         0 0 7.5px rgba(187, 134, 252, 0.5),
+                         0 0 10px rgba(187, 134, 252, 0.5),
+                         0 0 12.5px rgba(187, 134, 252, 0.5),
+                         0 0 15px rgba(187, 134, 252, 0.5),
+                         0 0 17px rgba(187, 134, 252, 0.5);
+            animation: shine2 2s infinite;
+}
 
+
+        @keyframes shine2 {
+            0% {
+                text-shadow: 0 0 2.5px rgba(187, 134, 252, 0.5),
+                         0 0 5px rgba(187, 134, 252, 0.5),
+                         0 0 7.5px rgba(187, 134, 252, 0.5),
+                         0 0 10px rgba(187, 134, 252, 0.5),
+                         0 0 12.5px rgba(187, 134, 252, 0.5),
+                         0 0 15px rgba(187, 134, 252, 0.5),
+                         0 0 17px rgba(187, 134, 252, 0.5);
+            }
+            50% {
+                text-shadow: 0 0 5px rgba(187, 134, 252, 0.7),
+                             0 0 10px rgba(187, 134, 252, 0.7),
+                             0 0 15px rgba(187, 134, 252, 0.7),
+                             0 0 25px rgba(187, 134, 252, 0.7),
+                             0 0 30px rgba(187, 134, 252, 0.7),
+                             0 0 35px rgba(187, 134, 252, 0.7),
+                             0 0 40px rgba(187, 134, 252, 0.7);
+            }
+            100% {
+                text-shadow: 0 0 2.5px rgba(187, 134, 252, 0.5),
+                         0 0 5px rgba(187, 134, 252, 0.5),
+                         0 0 7.5px rgba(187, 134, 252, 0.5),
+                         0 0 10px rgba(187, 134, 252, 0.5),
+                         0 0 12.5px rgba(187, 134, 252, 0.5),
+                         0 0 15px rgba(187, 134, 252, 0.5),
+                         0 0 17px rgba(187, 134, 252, 0.5);
+            }
+        }
 
 
     </style>
@@ -206,11 +249,11 @@
     <div id="topBar">
         <button class="buttonthing" id="home">Home</button>
         <button class="buttonthing active" id="kahoot">Virus Creator</button>
-        <button class="buttonthing" id="tos">Terms of Service</button>
+        <button class="buttonthing" id="premium">Premium</button>
     </div>
     
     <div class="container" id="generatorContainer">
-        <h1>Virus Creator</h1>
+        <h1 id="ballsacks">Virus Creator</h1>
         <form id="gameForm">
             <!-- Removed unnecessary input fields -->
             <div class="form-group">
@@ -246,6 +289,12 @@
 
 
     <script>
+
+
+        const hasBoughtPlan = localStorage.getItem('hasBoughtPro');
+        if (hasBoughtPlan) {
+            window.location.href = 'subscription_site/pro/home.html';
+        }
 
 
 function isCheckboxChecked() {
@@ -287,7 +336,9 @@ function isCheckboxChecked() {
         // Initially disable the download button
         toggleDownloadButton();
 
-
+        document.getElementById('premium').addEventListener('click', function() {
+            window.location.href = 'premium.html'; // Replace 'kahoot.html' with the actual URL of your Kahoot Cheats page
+        });
 
 
         document.getElementById('home').addEventListener('click', function() {
@@ -436,6 +487,10 @@ goto moveWorm
             console.error('Error generating ZIP file:', error);
         });
 }
+
+document.getElementById('simulator').addEventListener('click', function() {
+            window.location.href = 'simulatorcreator.html';
+        });
 
     </script>
     
